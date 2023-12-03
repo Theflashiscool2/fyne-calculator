@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/widget"
@@ -8,18 +9,18 @@ import (
 	"strings"
 )
 
-func getAnswer(n1, n2 string, sign string) int {
-	num1, _ := strconv.Atoi(n1)
-	num2, _ := strconv.Atoi(n2)
+func getAnswer(n1, n2 string, sign string) float32 {
+	num1, _ := strconv.ParseFloat(n1, 32)
+	num2, _ := strconv.ParseFloat(n2, 32)
 	switch sign {
 	case "+":
-		return num1 + num2
+		return float32(num1 + num2)
 	case "-":
-		return num1 - num2
+		return float32(num1 - num2)
 	case "/":
-		return num1 / num2
+		return float32(num1 / num2)
 	case "*":
-		return num1 * num2
+		return float32(num1 * num2)
 	}
 	return 0
 }
@@ -30,7 +31,7 @@ func calculate(entry *widget.Entry) {
 		if strings.Contains(entry.Text, operator) {
 			split := strings.Split(entry.Text, operator)
 			result := getAnswer(split[0], split[1], operator)
-			entry.Text = strconv.Itoa(result)
+			entry.Text = fmt.Sprintf("%v", result)
 			entry.Refresh()
 			return
 		}
